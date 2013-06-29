@@ -1,0 +1,34 @@
+"
+"
+" Statline:
+""" Initialization:
+  set statusline=
+
+""" Environment Support:
+  let g:statline_syntastic = 0
+  let g:statline_fugitive = 0
+  let g:statline_rvm = 0
+  let g:statline_rbenv = 0
+
+""" Vim Native Support:
+  let g:statline_show_n_buffers = 1
+  let g:statline_show_encoding = 1
+  let g:statline_no_encoding_string = 'NONE'
+  let g:statline_filename_relative = 0
+  let g:statline_trailing_space = 1
+  let g:statline_mixed_indent = 1
+  let g:statline_show_charcode = 1
+
+""" Highlight Groups:
+  hi link User1 StatusLine      " Filename
+  "hi link User2 Statement      " Flags
+  "hi link User3 CursorColumn   " Errors
+  "hi link User4 Special        " Fugitive
+
+    "Or...
+    "hi User3 guifg=#FFFFFF guibg=#FF0000 gui=bold ctermfg=15 ctermbg=1
+
+
+"" vim:fdm=expr:fdl=2:ft=vim
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
+

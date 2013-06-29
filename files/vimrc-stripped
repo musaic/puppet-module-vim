@@ -8,12 +8,12 @@ set viminfo=
 set nocompatible
 let mapleader = ","
 
-set runtimepath=~/dev/vim,$VIMRUNTIME
+set runtimepath=~/.vim,$VIMRUNTIME
 
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 execute pathogen#infect()
 
-""" Colors And Syntax: {{{2
+""" Colors And Syntax: 
     let g:solarized_termcolors=16
     colorscheme solarized
     set background=dark
@@ -86,6 +86,9 @@ execute pathogen#infect()
 
 """ Utility Functions And Commands:
 
+:nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
+
+
 " visual shifting (builtin-repeat)
   vnoremap < <gv
   vnoremap > >gv
@@ -113,11 +116,11 @@ execute pathogen#infect()
   endif
 
 
-if filereadable('~/dev/vim/_vimrc.local')
-  source ~/dev/vim/_vimrc.local
+if filereadable('~/.vim/vimrc.local')
+  source ~/.vim/vimrc.local
 endif
 
 
 
-"" vim:fdm=expr:fdl=0
-"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
+" vim:fdm=expr:fdl=0
+" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='

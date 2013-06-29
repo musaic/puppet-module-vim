@@ -1,0 +1,99 @@
+" Add the variable with the name a:varName to the statusline. Highlight it as
+" 'error' unless its value is in a:goodValues (a comma separated string)
+
+function! AddStatuslineFlag(varName, goodValues)
+  set statusline+=%1*[%*
+  set statusline+=%3*
+  exec "set statusline+=%{RenderStlFlag(".a:varName.",'".a:goodValues."',1)}"
+  set statusline+=%*%1*
+  exec "set statusline+=%{RenderStlFlag(".a:varName.",'".a:goodValues."',0)}"
+  set statusline+=%1*]%*
+endfunction
+
+" returns a:value or ''
+" a:goodValues is a comma separated string of values that shouldn't be highlighted with the error group
+" a:error indicates whether the string that is returned will be highlighted as 'error'
+function! RenderStlFlag(value, goodValues, error)
+  let goodValues = split(a:goodValues, ',')
+  let good = index(goodValues, a:value) != -1
+  if (a:error && !good) || (!a:error && good)
+    return a:value
+  else
+    return ''
+  endif
+endfunction
+
+" return '[&et]' if &et is set wrong
+" return '[mixed-indenting]' if spaces and tabs are used to indent
+" return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let tabs = search('^\t', 'nw') != 0
+        let spaces = search('^ ', 'nw') != 0
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[m-idx]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        else
+            let b:statusline_tab_warning = ''
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+
+" return '[\s]' if trailing white space is detected
+" return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+
+" hi link StatusLine darkgray_on_white
+hi! link StatusLine    col_black_white
+hi! link StatusLineNC  None
+hi! link User1 col_black_white                " Normal
+hi! link User2 col_red_white                  " Error Condition
+hi! link User3 col_darkred_white
+hi! link User4 col_darkblue_white
+
+" Fancy statusline.
+set statusline=                                     "Reset, please
+set statusline=\ %1*%t%*                           "tail of the filename
+set statusline+=%2*%m%*                          "modified flag
+set statusline+=%3*%{StatuslineTabWarning()}%*           "warnings for mixed tabs and other issues
+set statusline+=%3*%{StatuslineTrailingSpaceWarning()}\ %* "warning if there is any trailing whitespace
+"set statusline+=%1*%h%*                                  "help file flag
+
+" Syntastic plugin warnings
+"set statusline+=%#warningmsg#
+set statusline+=\ %1*%{SyntasticStatuslineFlag()}\ %*
+set statusline+=%*
+
+" From Fugitive plugin
+set statusline+=\ %1*%{fugitive#statusline()}\ %*
+
+set statusline+=%=                                  "left/right separator
+set statusline+=%4*
+set statusline+=%c,                                 "cursor column
+set statusline+=%l/%L                               "cursor line/total lines
+set statusline+=\ %p%%                                 "percent through file
+set statusline+=\ %1*%y%r%*                   "filetype + R-O flag
+set statusline+=%1*
+call AddStatuslineFlag('&ff', 'unix')             "fileformat
+call AddStatuslineFlag('&fenc', 'utf-8')          "file encoding
+set statusline+=%*
+" recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+" recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+"" vim:fdm=expr:fdl=2:ft=vim
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
+

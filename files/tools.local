@@ -1,0 +1,21 @@
+" COllection of plugins and keymaps that I've found useful for testing.
+" Right now, that's mostly colorscheme and highlight kind of stuff
+
+" Colorscheme And Settings Exploration:
+command!    Hitest  :so $VIMRUNTIME/syntax/hitest.vim
+command!    Optwin  :so $VIMRUNTIME/optwin.vim
+command!    Hiopt   :call HiOpt()
+
+function! SyntaxItem()
+  return synIDattr(synID(line("."),col("."),1),"name")
+endfunction
+
+function! HiOpt()
+  :tabnew 
+  :ru $VIMRUNTIME/syntax/hitest.vim
+  return
+endfunction
+
+"" vim:fdm=expr:fdl=2:ft=vim
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
+

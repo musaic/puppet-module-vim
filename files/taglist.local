@@ -1,0 +1,33 @@
+""" Taglist:
+         let Tlist_Auto_Open = 0                   "Default: 0
+	let Tlist_Auto_Highlight_Tag = 1          "Default: none
+	let Tlist_Auto_Update = 1                 "Default: 1
+	let Tlist_Close_On_Select = 0             "Default: 0
+	let Tlist_Compact_Format = 1              "Default: 0
+	let Tlist_Display_Prototype = 0           "Default: 0
+	let Tlist_Display_Tag_Scope = 0           "Default: 0
+	let Tlist_File_Fold_Auto_Close = 1        "Default: 0
+	let Tlist_GainFocus_On_ToggleOpen = 1     "/Users/ladmin/opt/repos/godlygeek/vim-files/_vimrcDefault: 1
+	let Tlist_Highlight_Tag_On_BufEnter = 0   "Default: 1
+	let Tlist_Process_File_Always = 1         "Default: 0
+	let Tlist_Show_One_File = 0               "Default: 0
+	let Tlist_Sort_Type = "order"             "Sort by name or order
+	let Tlist_Use_Horiz_Window = 0            "Default: 0
+	let Tlist_Use_Right_Window = 0            "Default: 0
+	let Tlist_Use_SingleClick = 0             "Default: 0
+	let Tlist_WinWidth = 40                   "Default: 30
+  
+    if has('gui')
+      let Tlist_Show_Menu = 1
+    else
+      let Tlist_Show_Menu = 0
+    endif
+  
+    nmap <Leader>tt :TlistToggle<CR>
+    nmap <Leader>tp :TlistShowPrototype<CR>
+    nmap <Leader>ta :TlistAddFiles
+    nmap <Leader>tr :TlistAddFilesRecursive
+    nmap <Leader>tu :TlistUpdate<CR>
+
+"" vim:fdm=expr:fdl=2:ft=vim
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='

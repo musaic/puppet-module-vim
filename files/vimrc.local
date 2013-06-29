@@ -1,0 +1,57 @@
+"
+"
+""" My Preferences:
+set title       "Set the window's title.  May want to customize with titlestring
+
+
+set timeoutlen=500  "Vim waits .5 seconds for any special char to follow <ESC>
+
+" Mappings:
+" TODO  This needs to have motion commands added so that the
+"       cursor returns to starting position
+  nmap <Leader>vft  :r ~/dev/vim/vim.ftr
+
+""" Abbreviations:
+
+
+""" Utility:
+
+
+" From quickfix.txt: Ouput from grep is sent to the quickfix 
+" window, instead of a full screen output.  
+" TODO: Need to avoid copen when nothing's found- or keep the
+" quickfix window open all the time.
+
+command! -nargs=+ NewGrep execute 'silent grep! <args>' | copen 42
+
+function! LoadLocal(file)
+    if filereadable("~/.vim/" . a:file)
+      source "~/.vim" . a:file
+    endif
+endfunction
+
+
+""" NetRW
+call LoadLocal('netrw.local')
+
+
+""" Syntastic:
+call LoadLocal('syntastic.local')
+
+""" Fugitive:
+call LoadLocal('fugitive.local')
+
+""" Statline:
+
+call LoadLocal('my_stl.local')
+
+""" Tools:
+call LoadLocal('tools.local')
+call LoadLocal('chlog.local')
+call LoadLocal('taglist.local')
+
+
+
+"" vim:fdm=expr:fdl=2
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
+

@@ -1,0 +1,8 @@
+
+
+
+
+
+"" vim:fdm=expr:fdl=2
+"" vim:fde=getline(v\:lnum)=~'^""'?'>'.(matchend(getline(v\:lnum),'""*')-2)\:'='
+
