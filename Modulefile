@@ -7,4 +7,4 @@ summary 'Manage everyone\'s favorite editor, Vim.'
 description 'Manage Vim'
 project_page 'https://github.com/musaic/puppet-module-vim'
 
-dependency 'puppetlabs/stdlib'
+dependency 'puppetlabs/stdlib', '>= 4.0.x'
